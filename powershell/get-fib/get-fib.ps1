@@ -20,7 +20,5 @@ function Get-fibonacci{
             }
             
         }
-
     }
-
 }
