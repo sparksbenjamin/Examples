@@ -14,7 +14,7 @@ function Get-fibonacci{
                 $n2 = $Requested_possition - 2
                 $n1_value = Get-fibonacci -Requested_possition $n1 -mem $mem
                 $n2_value = Get-fibonacci -Requested_possition $n2 -mem $mem
-                [double]$tvalue = $n1_value + $n2_value
+                [bigint]$tvalue = $n1_value + $n2_value
                 $mem.$Requested_possition=$tvalue
                 return $tvalue
             }
