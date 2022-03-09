@@ -33,3 +33,4 @@ $wc.DownloadFile($url, $output)
 
 Write-Output "Time taken: $((Get-Date).Subtract($start_time).Seconds) second(s)"
 while(!$global:are.WaitOne(500)) {}
+[string]$str
