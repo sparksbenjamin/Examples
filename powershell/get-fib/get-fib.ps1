@@ -17,10 +17,16 @@ function Get-fibonacci{
                 [double]$tvalue = $n1_value + $n2_value
                 $mem.$Requested_possition=$tvalue
                 return $tvalue
-            }
-            
+            }   
         }
-
     }
+}
+function Get-Fib-Seq {
+    param (
+        $Starting_Number,
+        $Number
+    )
+    foreach($i)
 
+    
 }
