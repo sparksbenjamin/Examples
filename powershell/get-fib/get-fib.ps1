@@ -21,12 +21,3 @@ function Get-fibonacci{
         }
     }
 }
-function Get-Fib-Seq {
-    param (
-        $Starting_Number,
-        $Number
-    )
-    foreach($i)
-
-    
-}
