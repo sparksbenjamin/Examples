@@ -8,6 +8,7 @@ function get-reverse {
     [array]::Reverse($ar_str)
     #$output = $ar_str
     $reverse_string = -join($ar_str)
-    $output.reverse_string = $reverse_string
+    $output = $reverse_string
     return $output
+
 }
