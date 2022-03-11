@@ -33,11 +33,17 @@ function Get-Fib-Seq{
     )
     $output=@{}
     $max = $Starting_Num + $Count
+    $bseed = @{}
     for($i=$Starting_Num; $i -le $max;$i++){
-        $value = Get-fibonacci -Requested_possition $i
+        $c = $i - $Starting_Num
+        if($c -ge 3){
+            #buld Seed
+            $bseed = $output
+        }
+        $value = Get-fibonacci -Requested_possition $i -seed $bseed
         $output.$i = $value
     }
-    return $output.GetEnumerator() | sort -Property Name
+    return $output.GetEnumerator() | sort-object -Property Name
     $i=0
     $output=''
 }
