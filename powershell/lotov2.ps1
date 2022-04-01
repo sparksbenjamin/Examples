@@ -193,6 +193,7 @@ function Get-Seq-Score{
         [string]$seq,
         $data
     )
+    $p = $array = $seq.Split(",")
     $score = 100
     $s_val = Get-Seq-Val -seq $seq
     $avg_ticket_value = $data.DVal | Measure-Object -Average | Select-Object Average
@@ -204,24 +205,61 @@ function Get-Seq-Score{
     }
     #write-host $val_score
     $score = $score - $val_score
+
+
+    <# Top and Bottom Subtractors #>
+    $P1_Bottom = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $P1_Top = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $P2_Bottom = $data.P2 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $P2_Top = $data.P2 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $P3_Bottom = $data.P3 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $P3_Top = $data.P3 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $P4_Bottom = $data.P4 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $P4_Top = $data.P4 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $P5_Bottom = $data.P5 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $P5_Top = $data.P5 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $P6_Bottom = $data.P6 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $P6_Top = $data.P6 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    if ($P1_Bottom.Name -contains $p.1){$score = $score - 2}
+    if ($P1_Top.Name -contains $p.1){$score = $score - 1}
+    if ($P2_Bottom.Name -contains $p.1){$score = $score - 2}
+    if ($P2_Top.Name -contains $p.1){$score = $score - 1}
+    if ($P3_Bottom.Name -contains $p.1){$score = $score - 2}
+    if ($P3_Top.Name -contains $p.1){$score = $score - 1}
+    if ($P4_Bottom.Name -contains $p.1){$score = $score - 2}
+    if ($P4_Top.Name -contains $p.1){$score = $score - 1}
+    if ($P5_Bottom.Name -contains $p.1){$score = $score - 2}
+    if ($P5_Top.Name -contains $p.1){$score = $score - 1}
+    if ($P6_Bottom.Name -contains $p.1){$score = $score - 2}
+    if ($P6_Top.Name -contains $p.1){$score = $score - 1}
+
+
     return $score
 }
 $data_file_path = "C:\Users\Spark\Downloads\results.csv"
 #Get-Lotto-data -Path $data_file_path
 $data = Import-Csv -Path $data_file_path
-
+#$data.P1 |  Group-Object -NoElement | Select-Object Name,Count | Sort-Object Count -Descending
+#$P1_Bottom = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+#$P1_Top = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+#$P1_Top.Name
+#break
 #Get-Average -array $wc
 #Get-Average -array $weight.Count
 $winners=@()
 $i = 1
-foreach($i in 1..1000){
+#foreach($i in 1..100)
+while($winners.Length -lt 5)
+{
     $score = 0
     $seq = Get-lottery-numbers -data $data -badSeq $winners
     $score = Get-Seq-Score -seq $seq -data $data
     $ticket = 
     @([PSCustomObject]@{SEQ=$seq;SCORE=$score})
-    $winners += $ticket   
-   
+    #$ticket
+    if($score -ge 97){
+        $winners += $ticket 
+    }
 }
 #$seq, $score
 $winners 
