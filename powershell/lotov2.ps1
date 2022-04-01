@@ -208,31 +208,50 @@ function Get-Seq-Score{
 
 
     <# Top and Bottom Subtractors #>
+    $TOPNUMBERS=@()
+    $BOTTOMENUMBERS=@()
     $P1_Bottom = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
-    $P1_Top = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $BOTTOMENUMBERS += $P1_Bottom.Name
+    $P1_Top = $data.P1 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8
+    $TOPNUMBERS += $P1_Top.Name 
     $P2_Bottom = $data.P2 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $BOTTOMENUMBERS += $P2_Bottom.Name
     $P2_Top = $data.P2 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $TOPNUMBERS += $P2_Top.Name
     $P3_Bottom = $data.P3 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $BOTTOMENUMBERS += $P3_Bottom.Name
     $P3_Top = $data.P3 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $TOPNUMBERS += $P3_Top.Name
     $P4_Bottom = $data.P4 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $BOTTOMENUMBERS += $P4_Bottom.Name
     $P4_Top = $data.P4 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
-    $P5_Bottom = $data.P5 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $TOPNUMBERS += $P4_Top.Name
+    $P5_Bottom = $data.P5 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8
+    $BOTTOMENUMBERS += $P5_Bottom.Name 
     $P5_Top = $data.P5 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $TOPNUMBERS += $P5_Top.Name
     $P6_Bottom = $data.P6 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -Last 8 
+    $BOTTOMENUMBERS += $P6_Bottom.Name
     $P6_Top = $data.P6 | Group-Object -NoElement | Sort-Object Count -Descending | Select-Object -First 8 
+    $TOPNUMBERS += $P6_Top.Name
+    $BOTTOMENUMBERS = $BOTTOMENUMBERS | Select-Object -Unique
+    $TOPNUMBERS = $TOPNUMBERS | Select-Object -Unique
+    if($BOTTOMENUMBERS -in $p){$score + 5}
+    if($TOPNUMBERS -in $p){$score + 5}
     if ($P1_Bottom.Name -contains $p.1){$score = $score - 2}
     if ($P1_Top.Name -contains $p.1){$score = $score - 1}
-    if ($P2_Bottom.Name -contains $p.1){$score = $score - 2}
-    if ($P2_Top.Name -contains $p.1){$score = $score - 1}
-    if ($P3_Bottom.Name -contains $p.1){$score = $score - 2}
-    if ($P3_Top.Name -contains $p.1){$score = $score - 1}
-    if ($P4_Bottom.Name -contains $p.1){$score = $score - 2}
-    if ($P4_Top.Name -contains $p.1){$score = $score - 1}
-    if ($P5_Bottom.Name -contains $p.1){$score = $score - 2}
-    if ($P5_Top.Name -contains $p.1){$score = $score - 1}
-    if ($P6_Bottom.Name -contains $p.1){$score = $score - 2}
-    if ($P6_Top.Name -contains $p.1){$score = $score - 1}
+    if ($P2_Bottom.Name -contains $p.2){$score = $score - 2}
+    if ($P2_Top.Name -contains $p.2){$score = $score - 1}
+    if ($P3_Bottom.Name -contains $p.3){$score = $score - 2}
+    if ($P3_Top.Name -contains $p.3){$score = $score - 1}
+    if ($P4_Bottom.Name -contains $p.4){$score = $score - 2}
+    if ($P4_Top.Name -contains $p.4){$score = $score - 1}
+    if ($P5_Bottom.Name -contains $p.5){$score = $score - 2}
+    if ($P5_Top.Name -contains $p.5){$score = $score - 1}
+    if ($P6_Bottom.Name -contains $p.6){$score = $score - 2}
+    if ($P6_Top.Name -contains $p.6){$score = $score - 1}
 
+    <# END SECTION #>
 
     return $score
 }
